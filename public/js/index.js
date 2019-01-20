@@ -1,5 +1,5 @@
 
-let game = new Phaser.Game(800, 600, Phaser.AUTO, '')
+let game = new Phaser.Game(800, 610, Phaser.AUTO, '')
 
 game.state.add('Level', Level)
 
