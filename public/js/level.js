@@ -5,6 +5,7 @@ let controls = {};
 let playerSpeed = 150;
 let jumpTimer=0;
 let enemy;
+let timer = 0;
 
 Enemy = function(index, game, x,y){
   this.enemy = game.add.sprite(x,y,'enemy')
@@ -69,6 +70,7 @@ let Level = {
       up: this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
     }
 
+    //enemy
      enemy = new Enemy(0,game,player.x+470,player.y-580)
 
   },
@@ -97,15 +99,23 @@ let Level = {
     if(player.body.velocity.x==0 && player.body.velocity.y == 0 ){
       player.animations.play('idle')
     }
-    // if(checkOverlap(player,enemy.enemy))
     if(this.checkOverlap(player,enemy.enemy)){
       this.resetPlayer()
+      player.animation.play('idle')
     }
+
+
+
   },
 
 
   resetPlayer: function(){
-    game.state.start('Level')
+    player.body.enable = false;
+    player.animations.stop();
+    game.time.events.add(Phaser.Timer.SECOND, function() {
+      game.state.paused = true;
+      game.state.start('Level')
+    })
   },
 
   getClothes: function(){
