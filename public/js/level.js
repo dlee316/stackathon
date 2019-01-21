@@ -28,7 +28,8 @@ let Level = {
   preload: function(){
     this.load.tilemap('map', 'assets/world.csv')
     this.load.image('tileset','assets/tiles.png' )
-    this.load.spritesheet('player', 'assets/character.png',24,26)
+    // this.load.spritesheet('player', 'assets/character.png',24,26)
+    this.load.spritesheet('player','assets/player.png',25,32)
     this.load.image('enemy', 'assets/enemy.png')
   },
 
@@ -60,10 +61,9 @@ let Level = {
     player.anchor.setTo(0.5,0.5)
 
     //last param is for looping
-    player.animations.add('idle', [0,1], true)
-    player.animations.add('jump', [2],1, true)
-    player.animations.add('run', [3,4,5,6,7,8], true)
-    //add dead
+    player.animations.add('idle', [0], true)
+    player.animations.add('jump', [6],5, true)
+    player.animations.add('run', [3,4,5,6], true)
 
     this.physics.arcade.enable(player)
     // this.camera.follow(player)
@@ -117,7 +117,6 @@ let Level = {
     player.body.enable = false;
     player.animations.stop()
     this.game.time.events.add(Phaser.Timer.SECOND*.25, function() {
-      //change to dead
       player.animations.play('idle')
       game.state.paused = true;
       game.state.start('Level')

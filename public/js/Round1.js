@@ -3,6 +3,7 @@ let Round1 = {
   preload: function() {
     this.load.image('ground', 'assets/ground.png')
     this.load.image('player', 'assets/player.png')
+    this.load.image('test', 'assets/test.png')
   },
 
 create: function() {
@@ -23,24 +24,24 @@ create: function() {
         ground.body.immovable = true
     }
 
-    for(let i=0; i<3; i++){
-      ground = this.platform.create(i*45,
-       game.world.height -110,
-       'ground')
-       ground.body.immovable = true
-    }
+    // for(let i=0; i<3; i++){
+    //   ground = this.platform.create(i*45,
+    //    game.world.height -110,
+    //    'ground')
+    //    ground.body.immovable = true
+    // }
 
-    for(let i=0; i<4; i++){
-      ground = this.platform.create((i*45)+500,400, 'ground')
-      ground.body.immovable = true
-    }
+    // for(let i=0; i<4; i++){
+    //   ground = this.platform.create((i*45)+500,400, 'ground')
+    //   ground.body.immovable = true
+    // }
 
-    //vertical
-    for(let i=0; i<3; i++){
-      ground = this.platform.create(314,(i*45)+399,'ground')
-            ground.body.immovable = true
+    // //vertical
+    // // for(let i=0; i<3; i++){
+    // //   ground = this.platform.create(314,(i*45)+399,'ground')
+    // //         ground.body.immovable = true
 
-    }
+    // // }
 
     // ground = this.platform.create((500,200, 'ground_long_2'))
     // let ledge = this.platform.create(400,450,'ground_long_2')
