@@ -5,7 +5,11 @@ let controls = {};
 let playerSpeed = 150;
 let jumpTimer=0;
 let enemy;
-let timer = 0;
+let stars;
+let star;
+let score;
+let scoreText;
+
 
 Enemy = function(index, game, x,y){
   this.enemy = game.add.sprite(x,y,'enemy')
@@ -31,6 +35,7 @@ let Level = {
     // this.load.spritesheet('player', 'assets/character.png',24,26)
     this.load.spritesheet('player','assets/player.png',25,32)
     this.load.image('enemy', 'assets/enemy.png')
+    this.load.image('star','assets/star.png')
   },
 
   create: function(game){
@@ -41,17 +46,15 @@ let Level = {
     layer = map.createLayer(0)
     layer.resizeWorld()
 
+    map.enableBody = true
     map.setCollisionBetween(0,0)
 
     //obstacle (first param is index of tileset)
     map.setTileIndexCallback(26,function(){
-      console.log(player.position)
       map.replace(26,30)
       this.resetPlayer()
     },this)
 
-    //clothes
-    map.setTileIndexCallback(21,this.getClothes,this)
 
 
     this.physics.arcade.gravity.y = 1400
@@ -78,6 +81,21 @@ let Level = {
     //enemy
      enemy = new Enemy(0,game,player.x+470,player.y-580)
 
+     //star
+     stars = game.add.group()
+     stars.enableBody = true
+     star = stars.create(100,200,'star')
+     star = stars.create(740,200,'star')
+     star = stars.create(680,500,'star')
+     star = stars.create(390,500,'star')
+     star = stars.create(100,30,'star')
+     star = stars.create(740,30,'star')
+
+     star.body.gravity.y = 300
+     star.body.bounce.y = 0.7 + Math.random() * 0.2
+
+
+    scoreText = game.add.text('score: 0', { fontSize: '32px', fill: '#000' })
   },
 
   update: function(){
@@ -109,6 +127,13 @@ let Level = {
     }
 
 
+    //star
+    game.physics.arcade.collide(stars, layer)
+    game.physics.arcade.overlap(player, stars, function(player,star){
+      star.kill()
+      score += 10;
+      scoreText.text = 'Score: ' + score;
+    }, null, this);
 
   },
 
@@ -123,9 +148,6 @@ let Level = {
     })
   },
 
-  getClothes: function(){
-    map.putTile(-1,layer.getTileX(player.x), layer.getTileY(player.y))
-   },
    checkOverlap: function(a,b){
      let boundsA = a.getBounds()
      let boundsB = b.getBounds()
