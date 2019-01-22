@@ -30,6 +30,10 @@ Enemy = function(index, game, x,y){
 let Level = {
 
   preload: function(){
+    this.load.audio('hurt', 'assets/sounds/ouch.mp3')
+    this.load.audio('yay','assets/sounds/yay.mp3')
+    // this.load.audio('song','assets/sounds/song.mp3')
+
     this.load.tilemap('map', 'assets/world.csv')
     this.load.image('tileset','assets/newtiles.png')
     // this.load.spritesheet('player', 'assets/character.png',24,26)
@@ -166,6 +170,7 @@ let Level = {
     //star
     game.physics.arcade.collide(stars, layer)
     game.physics.arcade.overlap(player, stars, function(player,star){
+      game.add.audio('yay').play()
       star.kill()
       score ++;
       scoreText.text = 'Score: ' + score + '/6';
@@ -185,7 +190,8 @@ let Level = {
   resetPlayer: function(){
     player.body.enable = false;
     player.animations.stop()
-    this.game.time.events.add(Phaser.Timer.SECOND*.25, function() {
+    this.game.time.events.add(Phaser.Timer.SECOND*.45, function() {
+      game.add.audio('hurt').play()
       player.animations.play('idle')
       game.state.paused = true;
       life-=1
