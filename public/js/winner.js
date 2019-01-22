@@ -10,5 +10,10 @@ let Winner = {
     image.width = game.width-80
 
   },
-  update: function(){}
+  update: function(){
+    if(game.input.activePointer.isDown){
+      life = 5
+      game.state.start("Start")
+    }
+  }
 }

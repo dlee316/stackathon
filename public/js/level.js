@@ -35,7 +35,6 @@ let Level = {
 
     this.load.tilemap('map', 'assets/world.csv')
     this.load.image('tileset','assets/newtiles.png')
-    // this.load.spritesheet('player', 'assets/character.png',24,26)
     this.load.spritesheet('player','assets/player.png',25,32)
     this.load.image('enemy', 'assets/enemy.png')
     this.load.image('star','assets/star.png')
@@ -53,7 +52,6 @@ let Level = {
     layer.resizeWorld()
 
     map.enableBody = true
-    //change this for key
     map.setCollisionBetween(0,0)
 
     //obstacle (first param is index of tileset)
@@ -91,7 +89,6 @@ let Level = {
     map.setTileIndexCallback(9,function(){
       this.resetPlayer()
     },this)
-
 
     this.physics.arcade.gravity.y = 1400
 
@@ -162,7 +159,6 @@ let Level = {
     if(this.checkOverlap(player,enemy.enemy)){
       this.resetPlayer()
     }
-
 
     //star
     game.physics.arcade.collide(stars, layer)
