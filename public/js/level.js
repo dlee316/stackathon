@@ -9,7 +9,7 @@ let stars;
 let star;
 let score = 0;
 let scoreText;
-let life = 3;
+let life = 10;
 let lifeText;
 
 
