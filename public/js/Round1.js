@@ -1,5 +1,4 @@
 let Round1 = {
-
   preload: function() {
     this.load.image('ground', 'assets/ground.png')
     this.load.image('player', 'assets/player.png')

@@ -7,7 +7,7 @@ let jumpTimer=0;
 let enemy;
 let stars;
 let star;
-let score;
+let score = 0;
 let scoreText;
 
 
@@ -31,22 +31,25 @@ let Level = {
 
   preload: function(){
     this.load.tilemap('map', 'assets/world.csv')
-    this.load.image('tileset','assets/tiles.png' )
+    this.load.image('tileset','assets/tiles.png')
     // this.load.spritesheet('player', 'assets/character.png',24,26)
     this.load.spritesheet('player','assets/player.png',25,32)
     this.load.image('enemy', 'assets/enemy.png')
     this.load.image('star','assets/star.png')
+    this.load.image('background', 'assets/background.jpg')
   },
 
   create: function(game){
     //map
-    this.stage.backgroundColor = '#F8F8FF'
-    map = game.add.tilemap('map', 32,32)
+    this.add.sprite(0,0,'background')
+    this.add.sprite(0,280,'background')
+
+    map = game.add.tilemap('map')
     map.addTilesetImage('tileset')
     layer = map.createLayer(0)
-    layer.resizeWorld()
 
     map.enableBody = true
+    //change this for key
     map.setCollisionBetween(0,0)
 
     //obstacle (first param is index of tileset)
@@ -54,8 +57,6 @@ let Level = {
       map.replace(26,30)
       this.resetPlayer()
     },this)
-
-
 
     this.physics.arcade.gravity.y = 1400
 
@@ -95,8 +96,8 @@ let Level = {
      star.body.bounce.y = 0.7 + Math.random() * 0.2
 
 
-    scoreText = game.add.text('score: 0', { fontSize: '32px', fill: '#000' })
-  },
+     scoreText = game.add.text(40, 40, 'Score: 0', { fontSize: '12px', fill: '#000' });
+     },
 
   update: function(){
     this.physics.arcade.collide(player,layer)
@@ -135,6 +136,10 @@ let Level = {
       scoreText.text = 'Score: ' + score;
     }, null, this);
 
+    if(score === 60){
+      console.log('you won')
+      game.state.start('Winner')
+    }
   },
 
 
@@ -145,6 +150,7 @@ let Level = {
       player.animations.play('idle')
       game.state.paused = true;
       game.state.start('Level')
+      score = 0;
     })
   },
 
