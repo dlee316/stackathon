@@ -9,8 +9,7 @@ let stars;
 let star;
 let score = 0;
 let scoreText;
-let life = 10;
-let lifeText;
+let life = 5;
 
 
 Enemy = function(index, game, x,y){
@@ -60,37 +59,36 @@ let Level = {
     //obstacle (first param is index of tileset)
     map.setTileIndexCallback(1,function(){
       map.replace(1,9)
-      alive = false;
       this.resetPlayer()
     },this)
     map.setTileIndexCallback(2,function(){
       map.replace(2,8)
-      alive = false;
       this.resetPlayer()
     },this)
     map.setTileIndexCallback(3,function(){
       map.replace(3,8)
-      alive = false;
       this.resetPlayer()
     },this)
     map.setTileIndexCallback(4,function(){
       map.replace(4,8)
-      alive = false;
       this.resetPlayer()
     },this)
     map.setTileIndexCallback(5,function(){
       map.replace(5,8)
-      alive = false;
       this.resetPlayer()
     },this)
     map.setTileIndexCallback(6,function(){
       map.replace(6,8)
-      alive = false;
       this.resetPlayer()
     },this)
     map.setTileIndexCallback(7,function(){
       map.replace(7,8)
-      alive = false;
+      this.resetPlayer()
+    },this)
+    map.setTileIndexCallback(8,function(){
+      this.resetPlayer()
+    },this)
+    map.setTileIndexCallback(9,function(){
       this.resetPlayer()
     },this)
 
@@ -162,7 +160,6 @@ let Level = {
       player.animations.play('idle')
     }
     if(this.checkOverlap(player,enemy.enemy)){
-      alive = false;
       this.resetPlayer()
     }
 
