@@ -13,6 +13,7 @@ let Loser = {
   update: function(){
     if(game.input.activePointer.isDown){
       life = 5
+      score = 0
       game.state.start("Start")
     }
   }
