@@ -21,7 +21,6 @@ Enemy = function(index, game, x,y){
   this.enemy.body.collideWorldBounds = true
   this.enemy.body.allowGravity = false
 
-  //tween moves from one side to another
   this.enemyTween = game.add.tween(this.enemy).to({
     y:this.enemy.y+110
   },650,'Linear',true,0,100,true)
