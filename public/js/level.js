@@ -10,7 +10,6 @@ let star;
 let score = 0;
 let scoreText;
 let life = 3;
-let alive = true;
 let lifeText;
 
 
@@ -33,7 +32,7 @@ let Level = {
 
   preload: function(){
     this.load.tilemap('map', 'assets/world.csv')
-    this.load.image('tileset','assets/tiles.png')
+    this.load.image('tileset','assets/newtiles.png')
     // this.load.spritesheet('player', 'assets/character.png',24,26)
     this.load.spritesheet('player','assets/player.png',25,32)
     this.load.image('enemy', 'assets/enemy.png')
@@ -46,20 +45,52 @@ let Level = {
     this.add.sprite(0,0,'background')
     this.add.sprite(0,280,'background')
 
-    map = game.add.tilemap('map')
+    map = game.add.tilemap('map',32,32)
     map.addTilesetImage('tileset')
     layer = map.createLayer(0)
+    layer.resizeWorld()
 
     map.enableBody = true
     //change this for key
     map.setCollisionBetween(0,0)
 
     //obstacle (first param is index of tileset)
-    map.setTileIndexCallback(26,function(){
-      map.replace(26,30)
+    map.setTileIndexCallback(1,function(){
+      map.replace(1,9)
       alive = false;
       this.resetPlayer()
     },this)
+    map.setTileIndexCallback(2,function(){
+      map.replace(2,8)
+      alive = false;
+      this.resetPlayer()
+    },this)
+    map.setTileIndexCallback(3,function(){
+      map.replace(3,8)
+      alive = false;
+      this.resetPlayer()
+    },this)
+    map.setTileIndexCallback(4,function(){
+      map.replace(4,8)
+      alive = false;
+      this.resetPlayer()
+    },this)
+    map.setTileIndexCallback(5,function(){
+      map.replace(5,8)
+      alive = false;
+      this.resetPlayer()
+    },this)
+    map.setTileIndexCallback(6,function(){
+      map.replace(6,8)
+      alive = false;
+      this.resetPlayer()
+    },this)
+    map.setTileIndexCallback(7,function(){
+      map.replace(7,8)
+      alive = false;
+      this.resetPlayer()
+    },this)
+
 
     this.physics.arcade.gravity.y = 1400
 
