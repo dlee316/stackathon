@@ -9,12 +9,14 @@ let stars;
 let star;
 let score = 0;
 let scoreText;
+let life = 3;
+let alive = true;
+let lifeText;
 
 
 Enemy = function(index, game, x,y){
   this.enemy = game.add.sprite(x,y,'enemy')
   this.enemy.anchor.setTo(0.5,0.5)
-  this.enemy.name = index.toString()
   game.physics.enable(this.enemy, Phaser.Physics.ARCADE)
   this.enemy.body.immovable = true
   this.enemy.body.collideWorldBounds = true
@@ -55,6 +57,7 @@ let Level = {
     //obstacle (first param is index of tileset)
     map.setTileIndexCallback(26,function(){
       map.replace(26,30)
+      alive = false;
       this.resetPlayer()
     },this)
 
@@ -95,8 +98,9 @@ let Level = {
      star.body.gravity.y = 300
      star.body.bounce.y = 0.7 + Math.random() * 0.2
 
-
-     scoreText = game.add.text(40, 40, 'Score: 0', { fontSize: '12px', fill: '#000' });
+     //text
+     scoreText = game.add.text(40, 40, 'Score: ' + score+'/6', { fontSize: '12px', fill: '#000' });
+     lifeText = game.add.text(40, 55, 'Life: ' + life, { fontSize: '12px', fill: '#000' })
      },
 
   update: function(){
@@ -124,6 +128,7 @@ let Level = {
       player.animations.play('idle')
     }
     if(this.checkOverlap(player,enemy.enemy)){
+      alive = false;
       this.resetPlayer()
     }
 
@@ -132,16 +137,20 @@ let Level = {
     game.physics.arcade.collide(stars, layer)
     game.physics.arcade.overlap(player, stars, function(player,star){
       star.kill()
-      score += 10;
-      scoreText.text = 'Score: ' + score;
+      score ++;
+      scoreText.text = 'Score: ' + score + '/6';
     }, null, this);
 
-    if(score === 60){
-      console.log('you won')
+    //Winner Page
+    if(score === 6){
       game.state.start('Winner')
     }
-  },
 
+    //Loser Page
+    if(life === 0){
+      game.state.start('Loser')
+    }
+  },
 
   resetPlayer: function(){
     player.body.enable = false;
@@ -149,6 +158,7 @@ let Level = {
     this.game.time.events.add(Phaser.Timer.SECOND*.25, function() {
       player.animations.play('idle')
       game.state.paused = true;
+      life-=1
       game.state.start('Level')
       score = 0;
     })
